@@ -1,0 +1,65 @@
+<div class="card">
+    <div class="card-body">
+        <div class="form-group py-1">
+            <label for="state"> Choose State </label>
+            <select name="state" id="state" class="form-control" [(ngModel)]="selectedState"
+                (change)="handleStateChange()">
+                <option *ngFor="let state of states" value='{{state.state_id}}'>{{state.state_name}}</option>
+            </select>
+
+        </div>
+        <div class="form-group py-1" *ngIf="selectedState">
+            <label for="districts"> Choose District </label>
+            <select name="districts" id="districts" class="form-control" [(ngModel)]="selectedDistrict">
+                <option *ngFor="let district of districts" value='{{district.district_id}}'>{{district.district_name}}
+                </option>
+            </select>
+        </div>
+        <div class="form-group py-1">
+            <label for="date">Select Date</label>
+            <input type="date" class="form-control" name="date" id="date" [(ngModel)]="selectedDate" />
+        </div>
+        <div class="form-group py-1 text-center">
+            <button class="btn btn-info" (click)="getCentre()">
+                Find Centre
+            </button>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="sessions">
+    <div *ngIf="sessions.length; else noSessions">
+        <div class="alert alert-primary my-2 text-center">
+            {{sessions.length}} available on {{selectedDate}}
+        </div>
+        <div class="row">
+            <div class="col-12 col-lg-4 col-sm-6 py-2" *ngFor="let session of sessions">
+                <div class="card shadow-sm">
+                    <div class="card-header text-center">
+                        <strong>{{ session.name }}</strong> - {{ session.block_name }}, {{ session.pincode }}
+                    </div>
+                    <div class="card-body text-center">
+                        <p>
+                            <span class="badge rounded-pill bg-primary"> vaccine : {{ session.vaccine }}</span> <span
+                                class="badge rounded-pill bg-light text-dark">count : {{ session.available_capacity
+                                }}</span>
+                        </p>
+                        <div class="row">
+                            <div class="col-6" *ngFor="let slot of session.slots">
+                                <span class="badge rounded-pill bg-secondary"> {{ slot }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <ng-template #noSessions>
+        <div class="card mt-2">
+            <div class="card-body">
+                <h5 class="text-center text-danger">No Sessions Available on {{selectedDate}}</h5>
+            </div>
+        </div>
+    </ng-template>
+</div>
