@@ -1,12 +1,27 @@
 <div class="card">
     <div class="card-body">
         <div class="form-group py-1">
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name" class="form-control" [(ngModel)]="name">
+        </div>
+        <div class="form-group py-1">
+            <label for="email">Email Address</label>
+            <input type="email" name="email" id="email" class="form-control" [(ngModel)]="email_id">
+        </div>
+        <div class="form-group py-1">
+            <label for="aadhar">Aadhar Number</label>
+            <input type="number" name="aadhar" id="aadhar" class="form-control" [(ngModel)]="aadhar_number">
+        </div>
+        <div class="form-group py-1">
+            <label for="phone">Phone Number</label>
+            <input type="number" name="phone" id="phone" class="form-control" [(ngModel)]="phone_number">
+        </div>
+        <div class="form-group py-1">
             <label for="state"> Choose State </label>
             <select name="state" id="state" class="form-control" [(ngModel)]="selectedState"
                 (change)="handleStateChange()">
                 <option *ngFor="let state of states" value='{{state.state_id}}'>{{state.state_name}}</option>
             </select>
-
         </div>
         <div class="form-group py-1" *ngIf="selectedState">
             <label for="districts"> Choose District </label>
@@ -24,10 +39,21 @@
                 Find Centre
             </button>
         </div>
+        <div class="py-1 text-center text-danger" *ngIf="errors.length">
+            <div *ngFor="let error of errors">
+                <p>{{error}}</p>
+            </div>
+        </div>
     </div>
 </div>
 
 <div *ngIf="sessions">
+    <div class="card card-body text-center my-2">
+        <p>Name : {{name}}</p>
+        <p>Email Address : {{email_id}}</p>
+        <p>Phone Number : {{phone_number}}</p>
+        <p>Aadhar Number : {{aadhar_number}}</p>
+    </div>
     <div *ngIf="sessions.length; else noSessions">
         <div class="alert alert-primary my-2 text-center">
             {{sessions.length}} available on {{selectedDate}}
